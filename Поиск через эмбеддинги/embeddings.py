@@ -1,6 +1,6 @@
 from pandas import read_csv, DataFrame
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import GigaChatEmbeddings
+# from langchain_community.embeddings import GigaChatEmbeddings
 from langchain.chat_models.gigachat import GigaChat
 
 CREDENTIALS = "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg=="
@@ -48,16 +48,16 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
         'chunk' : [],
     }
     
-    embedder = GigaChatEmbeddings(credentials=CREDENTIALS, verify_ssl_certs=False)
-    for (name, text) in names_with_text.items():
-        for (index, chunk) in enumerate(text):
+    # embedder = GigaChatEmbeddings(credentials=CREDENTIALS, verify_ssl_certs=False)
+    # for (name, text) in names_with_text.items():
+    #     for (index, chunk) in enumerate(text):
             
-            result_data['name'].append(name)
-            result_data['text'].append(chunk)
-            result_data['chunk'].append(index)
+    #         result_data['name'].append(name)
+    #         result_data['text'].append(chunk)
+    #         result_data['chunk'].append(index)
             
-            embedding = embedder.embed_documents(texts=[chunk])[0]
-            result_data['embedding'].append(embedding)
+    #         embedding = embedder.embed_documents(texts=[chunk])[0]
+    #         result_data['embedding'].append(embedding)
 
     data = DataFrame(result_data)
     if data_path is not None:
