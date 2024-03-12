@@ -29,25 +29,29 @@ QUESTIONS_WITH_SOURCE = {
 }
 
 
-
-
 def main() -> None:
     # update text database
     database = 'data.csv'
     folder_name = 'C:\\Desktop\\bmnk\\projects\\BorisKaryshev___LLM_in_doc_search\\Поиск через эмбеддинги\\Статьи'
 
+    print("============> Pdfs loading: START")
     database = load_pdfs(folder_name, database, num_of_jobs=1)
+    print("============> Pdfs loading: END")
     
     database.to_csv('data.csv', index=False)
 
+    print("============> GigaChat initializing: START")
     chat = GigaChatWrapper(database)
+    print("============> GigaChat initializing: END")
 
+    print("============> Asking questions: START")
     for question in QUESTIONS_WITH_SOURCE.keys():
         res = chat.ask_question(question)
         print(
             f'Question: {question}\n'
             f'Answer: {res}\n'
         )
+    print("============> Asking questions: END")
 
 
 if __name__ == "__main__":
