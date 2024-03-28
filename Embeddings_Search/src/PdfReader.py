@@ -2,8 +2,13 @@ from pandas import DataFrame, read_csv
 from multiprocessing import Process, Queue, cpu_count
 from time import time
 import os
+import logging
 
-from PdfReader_impl import read_pdf
+from .PdfReader_impl import read_pdf
+
+
+logger = logging.getLogger()
+
 
 def process_worker(
     filename_queue: Queue, 
@@ -20,7 +25,7 @@ def process_worker(
             "embedding" : None
         })
 
-        print(
+        logger.info(
             f'Finished reading "{file}" it took {end - begin}'
         )
     result_queue.put(None)
@@ -36,7 +41,7 @@ def load_pdfs(folder_with_pdf: str, database: DataFrame | str, num_of_jobs: int 
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         if data.empty or filename not in data['name'].unique():
-            print(f'{filename = }')
+            logger.info(f'Reading file {filename}')
             filename_queue.put(filename)
 
     for _ in range(num_of_jobs):

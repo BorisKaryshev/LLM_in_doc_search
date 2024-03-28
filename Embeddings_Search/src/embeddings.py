@@ -1,11 +1,13 @@
 from pandas import read_csv, DataFrame
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import GigaChatEmbeddings
-from langchain.chat_models.gigachat import GigaChat
+from langchain_community.embeddings import GPT4AllEmbeddings
+import logging
+from tqdm import tqdm
 
-CREDENTIALS = "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg=="
+logger = logging.getLogger()
 
-def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame:
+
+def create_embeddings(data: DataFrame | str, embedder: GPT4AllEmbeddings, max_tokens: int = 512) -> DataFrame:
     data_path = None
     if isinstance(data, str):
         data_path = data
@@ -14,7 +16,6 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
     names_with_text = {}
 
     for idx in data.index:
-        print(data['name'][idx])
         name = data['name'][idx]
         text = data['text'][idx]
 
@@ -26,20 +27,9 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
     text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
                         chunk_size=max_tokens, chunk_overlap=5, separator=' ',
                     )
+
     for (name, text) in names_with_text.items():
         names_with_text[name] = text_splitter.split_text(''.join(text))
-        print(
-            'Chunk lengths:\n'
-            + ' '.join([str(len(chunk.split(' '))) for chunk in names_with_text[name]])
-        )
-    
-    
-    chat_model = GigaChat(credentials=CREDENTIALS)
-    copy = names_with_text
-    names_with_text = {}
-    for (name, text) in copy.items():
-        names_with_text[name] = [chunk for chunk in text if chat_model.get_num_tokens(chunk) <= max_tokens]
-    
 
     result_data = {
         'name' : [],
@@ -47,8 +37,8 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
         'embedding' : [],
         'chunk' : [],
     }
-    
-    embedder = GigaChatEmbeddings(credentials=CREDENTIALS, verify_ssl_certs=False)
+
+    logger.info("Creating embeddings")
     for (name, text) in names_with_text.items():
         for (index, chunk) in enumerate(text):
             
@@ -56,7 +46,7 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
             result_data['text'].append(chunk)
             result_data['chunk'].append(index)
             
-            embedding = embedder.embed_documents(texts=[chunk])[0]
+            embedding = embedder.embed_query(chunk)
             result_data['embedding'].append(embedding)
 
     data = DataFrame(result_data)
@@ -64,4 +54,3 @@ def create_embeddings(data: DataFrame | str, max_tokens: int = 512) -> DataFrame
         data.to_csv(data_path)
 
     return data
-        
