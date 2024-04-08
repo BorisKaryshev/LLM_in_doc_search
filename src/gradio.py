@@ -47,7 +47,7 @@ DEFAULT_CONFIG_PATH = Path(
 )
 
 
-def gradio_main():
+def gradio_main(share: bool = False):
     setup_default_logger()
 
     config = None
@@ -58,4 +58,4 @@ def gradio_main():
 
     searcher = GradioLLMSearcher()
     demo = gr.ChatInterface(searcher)
-    demo.launch()
+    demo.launch(share=share)
