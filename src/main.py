@@ -2,6 +2,8 @@ from .logger import setup_logger, setup_default_logger
 
 import logging
 import json
+from typing import Optional, TextIO
+
 
 setup_default_logger()
 logger = logging.getLogger()
@@ -9,7 +11,7 @@ logger = logging.getLogger()
 
 from .search import Searcher
 
-def main() -> None:
+def main(input_stream: Optional[TextIO] = input, output_stream: Optional[TextIO] = print) -> None:
     configs = None 
 
     try:
@@ -35,19 +37,27 @@ def main() -> None:
             logger.error("Failed while loading questions. Reading from stdin.")
         else:
             for question in questions:
-                res = searcher.ask_question(question)
-                res = (
-                    f'Question: {question}\n'
-                    f'Answer: {res}\n'
-                )                
-            exit(0)
+                res = searcher.ask_question(question)  
+                output_stream(res)
 
-    question = input("Your request is: ")
+    question = input_stream()
     while question.upper() != "EXIT":
         res = searcher.ask_question(question)
-        print(res)
-        question = input("Your request is: ")
-    
+        output_stream(res)
+        question = input_stream()
+
+class GradioInterface:
+    def __init__(self, config: dict):
+        self.__config = config
+        self.__searcher = self.__apply_configs(config)
+
+
+    @staticmethod
+    def __apply_configs(config: dict): 
+        searcher_config = config.get("datasheet_searcher")
+        if not searcher_config:
+            logger.error("Could not load searcher config")
+        return Searcher(searcher_config)
 
 if __name__ == "__main__":
     main()

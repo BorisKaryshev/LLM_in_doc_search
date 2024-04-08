@@ -30,6 +30,7 @@ def process_worker(
         )
     result_queue.put(None)
 
+
 def load_pdfs(folder_with_pdf: str, database: DataFrame | str, num_of_jobs: int = cpu_count()) -> DataFrame:
     data = database if isinstance(database, DataFrame) else read_csv(database)
 
