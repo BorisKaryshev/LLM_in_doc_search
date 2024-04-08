@@ -4,7 +4,6 @@ certifi==2023.11.17
 cffi==1.16.0
 charset-normalizer==3.3.2
 colorama==0.4.6
-contourpy==1.2.0
 cycler==0.12.1
 dataclasses-json==0.6.3
 filelock==3.13.1
