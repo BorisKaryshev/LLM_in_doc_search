@@ -1,7 +1,8 @@
 FROM python:3.8
 
-COPY ./src ./srv/src
+COPY ./src ./srv
 COPY ./main.py ./srv
-WORKDIR /srv/www
+COPY ./requirements.txt ./srv
+WORKDIR /srv
 
 RUN pip install -r requirements.txt
