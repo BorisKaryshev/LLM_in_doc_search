@@ -1,0 +1,18 @@
+version: '3'
+
+volumes:
+    pgdata:
+        driver: local
+services:
+    python:
+        restart: always
+        build:
+            context: .
+            dockerfile: deploy/Python/dockerfile
+        volumes:
+            - .:/srv
+        expose:
+          - 8000
+        ports:
+            - 8000:8000
+        command: "python3.8 main.py"

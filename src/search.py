@@ -61,16 +61,18 @@ class Searcher:
             logger.warning("Database or pdfs locations not given. Chat model will answer only based on it knowledge")
 
     def __update_database(self, config: dict):
-        self.__data = load_pdfs(config["pdfs_location"], self.__data) 
+        if config.get("pdfs_location"):
+            self.__data = load_pdfs(config["pdfs_location"], self.__data) 
         database_location = config.get("database_location") or DEFAULT_DATABASE_LOCATION
         self.__data.to_csv(database_location)
         
         retriever = MyRetriever(self.__data)
-        self.__chat_model.set_retriever(retriever)
+        self.__retriever = retriever
         
     def ask_question(self, question: str) -> str:
         try:
-            return self.__chat_model.ask_question(question)
+            context = self.__retriever.get_relevant_documents(question)
+            return self.__chat_model.ask_question(question, context)
         except Exception as ex:
             logger.error(f"Asking question failed with: {ex}")
             return "Failed to answer question. See logs for details."    
