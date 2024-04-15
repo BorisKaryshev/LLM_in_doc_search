@@ -93,3 +93,4 @@ tzdata
 urllib3
 yarl
 gradio
+tesseract
