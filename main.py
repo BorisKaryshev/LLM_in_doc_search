@@ -3,7 +3,6 @@ from src.gradio import gradio_main
 from src.logger import setup_default_logger, setup_logger
 import json
 import logging
-from logging import handlers
 
 import argparse
 
@@ -28,7 +27,7 @@ def parse_arguments() -> argparse.Namespace:
 
 def remove_stream_log_handlers():
     for handler in logger.handlers:
-        if isinstance(handler, handlers.StreamHandler):
+        if isinstance(handler, logging.StreamHandler):
             logger.removeHandler(handler) 
 
 if __name__ == "__main__":
