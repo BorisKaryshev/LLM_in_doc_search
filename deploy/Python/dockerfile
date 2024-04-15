@@ -1,9 +1,0 @@
-FROM python:3.8
-
-COPY ./src ./srv
-COPY ./main.py ./srv
-COPY ./requirements.txt ./srv
-WORKDIR /srv
-
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
