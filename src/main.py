@@ -30,7 +30,7 @@ def main(config: dict, searcher_name: str) -> None:
     
     searcher = Searcher(searcher_config)
     
-    if searcher_config.get("questions_path"):
+    if searcher_config.get("questions"):
         ask_question_from_file(searcher, searcher_config.get("questions_path"))
 
     question = input("Your questions:\n")
