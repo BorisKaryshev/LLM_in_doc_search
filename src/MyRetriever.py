@@ -1,13 +1,15 @@
+from .PdfReader import load_pdfs
 from .embeddings import create_embeddings
 
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
-from langchain_community.embeddings import GPT4AllEmbeddings, HuggingFaceEmbeddings
-from numpy import dot, ndarray
-from numpy.linalg import norm
-from typing import List, Callable
-from pandas import DataFrame, Series
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from numpy.linalg import norm, dot
+from typing import List
+from pandas import DataFrame, concat
+from pathlib import Path
+from uuid import uuid4
 import logging
 
 
@@ -29,7 +31,26 @@ class MyRetriever(BaseRetriever):
         self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=256)
         logger.info(f"MyRetriever created with data")
 
+    def add_document(self, path: Path):
+        logger.info(f"Adding document {path}")
+        if path.is_dir():
+            raise RuntimeError("Got folder while adding single document")
+        if len(path.suffixes) > 1 and path.suffix != ".pdf":
+            raise RuntimeError(f"Only supported format is pdf, got {path}")
         
+        tmp_dir = Path(f"./{uuid4()}").mkdir()
+        prev_path = path
+        path.rename(tmp_dir / path.name)
+        
+        try:        
+            data = load_pdfs(tmp_dir, DataFrame())
+        except Exception:
+            path.rename(prev_path)
+            raise
+
+        self._data = concat([self._data, data], ignore_index=True, sort=False)
+        logger.info("Document added successfully")
+
     def set_num_of_relevant_chunks(self, num: int) -> None:
         self._num_of_relevant_chunks = num
 

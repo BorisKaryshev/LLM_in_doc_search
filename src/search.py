@@ -3,11 +3,13 @@ from .PdfReader import load_pdfs
 from .MyRetriever import MyRetriever
 
 from pandas import read_csv, DataFrame
-import logging
 from typing import Optional
-import os.path
+from pathlib import Path
 from langchain.chat_models.gigachat import GigaChat
 from langchain.prompts.chat import ChatPromptTemplate
+import logging
+import os.path
+
 
 logger = logging.getLogger()
 
@@ -68,7 +70,10 @@ class Searcher:
         
         retriever = MyRetriever(self.__data)
         self.__retriever = retriever
-        
+    
+    def add_document(self, path: Path) -> None:
+        self.__retriever.add_document(path)
+    
     def ask_question(self, question: str) -> str:
         try:
             context = self.__retriever.get_relevant_documents(question)
