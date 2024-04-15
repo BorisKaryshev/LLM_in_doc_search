@@ -1,4 +1,4 @@
-from .MyRetriever import Embedder
+from .embedders import Embedder
 
 from pandas import read_csv, DataFrame
 from langchain.text_splitter import CharacterTextSplitter
