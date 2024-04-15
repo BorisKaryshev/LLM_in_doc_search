@@ -30,8 +30,9 @@ def main(config: dict, searcher_name: str) -> None:
     
     searcher = Searcher(searcher_config)
     
-    if searcher_config.get("questions"):
-        ask_question_from_file(searcher, searcher_config.get("questions_path"))
+    path_to_questions = searcher_config.get("questions")
+    if path_to_questions:
+        ask_question_from_file(searcher, path_to_questions)
 
     question = input("Your questions:\n")
     while question.upper() != "EXIT":
