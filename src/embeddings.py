@@ -1,6 +1,7 @@
+from .MyRetriever import Embedder
+
 from pandas import read_csv, DataFrame
 from langchain.text_splitter import CharacterTextSplitter
-from MyRetriever import Embedder
 import logging
 from tqdm import tqdm
 
