@@ -40,6 +40,6 @@ if __name__ == "__main__":
     setup_logger(configs.get("logging"))
     
     if args.mode == "gradio":
-        gradio_main(share=True)
+        gradio_main(publish_link_to_web=True)
     else:
         main(configs, args.searcher)
