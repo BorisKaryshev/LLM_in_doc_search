@@ -28,12 +28,21 @@ class E5Embedder(Embedder):
 
     def embed_query(self, query: str) -> list:
         return self.__embedder.encode([query])[0]
+    
+
+class HuggingFaceEmbedder(Embedder):
+    def __init__(self):
+        self.__embedder = HuggingFaceEmbeddings()
+
+    def embed_query(self, query: str) -> list:
+        return self.__embedder.embed_query(query)
 
 
 def get_embedder(embedder_name: Optional[str] = None) -> Embedder:
     embedders = {
         "gpt4all" : GPT4AllEmbedder,
         "e5" : E5Embedder,
+        "hugging_face": HuggingFaceEmbedder,
     }
     if embedder_name is None:
         logger.info("Creating embedder gpt4all")
