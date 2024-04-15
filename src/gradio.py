@@ -1,9 +1,6 @@
-from search import Searcher
-from logger import setup_logger, setup_default_logger
+from .search import Searcher
 
 import gradio as gr
-from pathlib import Path
-from json import load
 import logging
 
 
