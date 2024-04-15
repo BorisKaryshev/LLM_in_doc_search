@@ -53,7 +53,7 @@ class MyRetriever(BaseRetriever):
         logger.info("Document added successfully")
 
     def set_num_of_relevant_chunks(self, num: int) -> None:
-        self._num_of_relevant_chunks = num
+        self.__dict__["_num_of_relevant_chunks"] = num
 
     def __get_text_from_table(self, relevant_chunk_index: int) -> str:
         if self._data.empty:
