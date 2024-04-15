@@ -71,7 +71,7 @@ class Searcher:
         database_location = config.get("database_location") or DEFAULT_DATABASE_LOCATION
         self.__data.to_csv(database_location)
         
-        retriever = MyRetriever(self.__data)
+        retriever = MyRetriever(self.__data, config.get("embedder_name"))
         self.__retriever = retriever
     
     def add_document(self, path: Path) -> None:

@@ -5,12 +5,14 @@ from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
 from langchain_community.embeddings import GPT4AllEmbeddings, HuggingFaceEmbeddings
+from sentence_transformers import SentenceTransformer
 from numpy.linalg import norm
 from numpy import dot
-from typing import List
+from typing import List, Optional
 from pandas import DataFrame, concat
 from pathlib import Path
 from uuid import uuid4
+from abc import ABC, abstractmethod
 import logging
 
 
@@ -21,14 +23,50 @@ def cosine_distances(a, b):
     return dot(a, b)/(norm(a)*norm(b))
 
 
+class Embedder(ABC):
+    @abstractmethod
+    def embed_query(self, query: str) -> list:
+        pass
+
+
+class GPT4AllEmbedder(Embedder):
+    def __init__(self):
+        self.__embedder = GPT4AllEmbeddings()
+
+    def embed_query(self, query: str) -> list:
+        return self.__embedder.embed_query(query)
+    
+    
+class E5Embedder(Embedder): 
+    def __init__(self):
+        self.__embedder = SentenceTransformer('intfloat/e5-large-v2')
+
+    def embed_query(self, query: str) -> list:
+        return self.__embedder.encode([query])[0]
+
+
+def get_embedder(embedder_name: Optional[str] = None) -> Embedder:
+    embedders = {
+        "gpt4all" : GPT4AllEmbedder,
+        "e5" : E5Embedder,
+    }
+    if embedder_name is None:
+        return GPT4AllEmbedder()
+    
+    embedder = embedders.get(embedder_name)
+    if embedder is None:
+        raise RuntimeError(f"Failed to create embedder, name not found {embedder_name}")
+    return embedder
+
+
 class MyRetriever(BaseRetriever):
 
-    def __init__(self, data: DataFrame):
+    def __init__(self, data: DataFrame, embedder_name: str):
         logger.info("Creating MyRetriever")
         super().__init__()
         
         self.__dict__['_num_of_relevant_chunks'] = 2
-        self.__dict__['_embedder'] = GPT4AllEmbeddings()
+        self.__dict__['_embedder'] = get_embedder(embedder_name)
         self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=256)
         logger.info(f"MyRetriever created with data")
 

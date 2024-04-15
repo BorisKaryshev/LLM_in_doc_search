@@ -1,13 +1,13 @@
 from pandas import read_csv, DataFrame
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import GPT4AllEmbeddings
+from MyRetriever import Embedder
 import logging
 from tqdm import tqdm
 
 logger = logging.getLogger()
 
 
-def create_embeddings(data: DataFrame | str, embedder: GPT4AllEmbeddings, max_tokens: int = 512) -> DataFrame:
+def create_embeddings(data: DataFrame | str, embedder: Embedder, max_tokens: int = 512) -> DataFrame:
     data_path = None
     if isinstance(data, str):
         data_path = data
