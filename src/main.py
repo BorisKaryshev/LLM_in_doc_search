@@ -1,12 +1,8 @@
-from .logger import setup_logger, setup_default_logger
-
 from typing import Callable
 import logging
-import argparse
 import json
 
 
-setup_default_logger()
 logger = logging.getLogger()
 
 
@@ -28,7 +24,7 @@ def ask_question_from_file(searcher: Searcher, path: str, outstream: Callable[[s
 
 def main(config: dict, searcher_name: str) -> None:
 
-    searcher_config = configs.get(searcher_name)
+    searcher_config = config.get(searcher_name)
     if not searcher_config:
         logger.error("Could not load searcher config")
     
@@ -42,6 +38,3 @@ def main(config: dict, searcher_name: str) -> None:
         res = searcher.ask_question(question)
         print(res)
         question = input()
-
-if __name__ == "__main__":
-    main()
