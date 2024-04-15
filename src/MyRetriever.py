@@ -4,7 +4,7 @@ from .embeddings import create_embeddings
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import GPT4AllEmbeddings, HuggingFaceEmbeddings
 from numpy.linalg import norm
 from numpy import dot
 from typing import List
@@ -28,7 +28,7 @@ class MyRetriever(BaseRetriever):
         super().__init__()
         
         self.__dict__['_num_of_relevant_chunks'] = 2
-        self.__dict__['_embedder'] = HuggingFaceEmbeddings()
+        self.__dict__['_embedder'] = GPT4AllEmbeddings()
         self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=256)
         logger.info(f"MyRetriever created with data")
 
