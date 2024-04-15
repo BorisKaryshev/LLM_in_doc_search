@@ -18,7 +18,11 @@ def ask_question_from_file(searcher: Searcher, path: str, outstream: Callable[[s
         logger.error(f"Failed while loading questions. Reading from stdin: {ex}. ")
     else:
         for question in questions:
-            res = searcher.ask_question(question)  
+            res = searcher.ask_question(question)
+            res = (
+                f"Question: {question}\n"
+                f"Answer: {res}"
+            )  
             outstream(res)
 
 
