@@ -39,7 +39,7 @@ class GradioLLMSearcher:
     def __init__(self, config: dict, searcher_name: str) -> None:
         self.__searcher = SearcherForGradio(config, searcher_name)
 
-    def __call__(self, query: str) -> str:
+    def __call__(self, query: str, *_, **__) -> str:
         command = query.strip().split()[0].lower()
 
         if command == "change_config":
@@ -53,9 +53,5 @@ class GradioLLMSearcher:
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
     searcher = GradioLLMSearcher(config, searcher_name)
-    demo = gr.ChatInterface(
-        fn=searcher,
-        inputs=["text"],
-        outputs=["text"],
-    )
+    demo = gr.ChatInterface(searcher)
     demo.launch(share=publish_link_to_web)
