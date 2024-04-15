@@ -17,13 +17,16 @@ HELP_MESSAGE = (
 class SearcherForGradio:
     def __init__(self, config: dict, searcher: str):
         self.__config = config
-        self.__searcher = self.change_searcher(config)
+        self.change_searcher(config)
 
     def change_searcher(self, searcher_name: str):
-        searcher_config = self.__config.get(searcher_name)
-        if not searcher_config:
+        try:
+            searcher_config = self.__config[searcher_name]
+        except Exception:
             logger.error(f"Could not load searcher config {searcher_name}")
-        return Searcher(searcher_config)
+            return
+
+        self.__searcher =  Searcher(searcher_config)
 
     def ask_question(self, query: str) -> str:
         return self.__searcher.ask_question(query)
