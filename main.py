@@ -10,6 +10,9 @@ import argparse
 logger = logging.getLogger()
 
 
+DEFAULT_PATH_TO_CONFIG = "./datasheets.json"
+
+
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config"
