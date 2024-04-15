@@ -24,13 +24,13 @@ def cosine_distances(a, b):
 
 class MyRetriever(BaseRetriever):
 
-    def __init__(self, data: DataFrame, embedder_name: Optional[str] = None):
+    def __init__(self, data: DataFrame, embedder_name: Optional[str] = None, max_tokens: int = 256):
         logger.info("Creating MyRetriever")
         super().__init__()
         
         self.__dict__['_num_of_relevant_chunks'] = 2
         self.__dict__['_embedder'] = get_embedder(embedder_name)
-        self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=256)
+        self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=max_tokens)
         logger.info(f"MyRetriever created with data")
 
     def add_document(self, path: Path):

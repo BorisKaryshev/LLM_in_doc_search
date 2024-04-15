@@ -48,39 +48,40 @@ class Searcher:
         self.__chat_model = create_chat_model(config)
         self.__data = DataFrame()
 
-        database_path = config.get("database_location")            
+        database_path = config.get("database_location")
         if database_path:
             if os.path.exists(database_path):
-                self.__data = read_csv(config["database_location"]) 
+                self.__data = read_csv(config["database_location"])
             else:
                 logger.warning("Database file not exists")
                 self.__data = DataFrame()
 
         if config.get("pdfs_location"):
             self.__update_database(config)
-        
+
         if not config.get("pdfs_location") and not config.get("database_location"):
             logger.warning("Database or pdfs locations not given. Chat model will answer only based on it knowledge")
-           
-        num_of_relevant_chunks = config.get("num_of_relevant_chunks", 2) 
-        self.__retriever.set_num_of_relevant_chunks(num_of_relevant_chunks)
+
+        self.__retriever.set_num_of_relevant_chunks(config.get("num_of_relevant_chunks", 2))
 
     def __update_database(self, config: dict):
         if config.get("pdfs_location"):
-            self.__data = load_pdfs(config["pdfs_location"], self.__data) 
+            self.__data = load_pdfs(config["pdfs_location"], self.__data)
         database_location = config.get("database_location") or DEFAULT_DATABASE_LOCATION
         self.__data.to_csv(database_location)
-        
-        retriever = MyRetriever(self.__data, config.get("embedder_name"))
+
+        retriever = MyRetriever(self.__data,
+                                config.get("embedder_name"),
+                                config.get("max_num_of_tokens", 256))
         self.__retriever = retriever
-    
+
     def add_document(self, path: Path) -> None:
         self.__retriever.add_document(path)
-    
+
     def ask_question(self, question: str) -> str:
         try:
             context = self.__retriever.get_relevant_documents(question)
             return self.__chat_model.ask_question(question, context)
         except Exception as ex:
             logger.error(f"Asking question failed with: {ex}")
-            return "Failed to answer question. See logs for details."    
+            return "Failed to answer question. See logs for details."

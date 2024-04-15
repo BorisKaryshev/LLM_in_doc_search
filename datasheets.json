@@ -25,7 +25,8 @@
         "database_location": "docs/multiple_docs.csv",
         "pdfs_location": "docs/multiple_docs/",
         "questions": "docs/questions.json",
-        "num_of_relevant_chunks": 3
+        "num_of_relevant_chunks": 3,
+        "max_num_of_tokens" : 512
     },
 
     "logging": {
