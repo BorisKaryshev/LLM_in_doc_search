@@ -3,6 +3,7 @@ from src.gradio import gradio_main
 from src.logger import setup_default_logger, setup_logger
 import json
 import logging
+from logging import handlers
 
 import argparse
 
@@ -25,6 +26,10 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--publish_to_web", action='store_true')
     return parser.parse_args()
 
+def remove_stream_log_handlers():
+    for handler in logger.handlers:
+        if isinstance(handler, handlers.StreamHandler):
+            logger.removeHandler(handler) 
 
 if __name__ == "__main__":
     setup_default_logger()
@@ -43,4 +48,5 @@ if __name__ == "__main__":
     if args.mode == "gradio":
         gradio_main(configs, args.searcher, publish_link_to_web=args.publish_to_web)
     else:
+        remove_stream_log_handlers()
         main(configs, args.searcher)
