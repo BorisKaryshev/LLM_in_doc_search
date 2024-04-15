@@ -5,7 +5,8 @@ from langchain_core.retrievers import BaseRetriever
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from numpy.linalg import norm, dot
+from numpy.linalg import norm
+from numpy import dot
 from typing import List
 from pandas import DataFrame, concat
 from pathlib import Path
