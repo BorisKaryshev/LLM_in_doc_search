@@ -1,8 +1,9 @@
 from .logger import setup_logger, setup_default_logger
 
+from typing import Callable
 import logging
+import argparse
 import json
-from typing import Optional, TextIO
 
 
 setup_default_logger()
@@ -11,53 +12,36 @@ logger = logging.getLogger()
 
 from .search import Searcher
 
-def main(input_stream: Optional[TextIO] = input, output_stream: Optional[TextIO] = print) -> None:
-    configs = None 
 
+def ask_question_from_file(searcher: Searcher, path: str, outstream: Callable[[str], None] = print):
+    questions = None
     try:
-        with open("datasheets.json", 'r', encoding='utf8') as config_file:
-            configs = json.load(config_file)
+        with open(path, 'r') as f:
+            questions = json.load(f)["questions"]             
     except Exception as ex:
-        logger.error(f"Failed to read configs: {ex}")
-        exit(1)
-    setup_logger(configs.get("logging"))
-    
-    searcher_config = configs.get("datasheet_searcher")
+        logger.error(f"Failed while loading questions. Reading from stdin: {ex}. ")
+    else:
+        for question in questions:
+            res = searcher.ask_question(question)  
+            outstream(res)
+
+
+def main(config: dict, searcher_name: str) -> None:
+
+    searcher_config = configs.get(searcher_name)
     if not searcher_config:
         logger.error("Could not load searcher config")
     
     searcher = Searcher(searcher_config)
     
     if searcher_config.get("questions_path"):
-        questions = None
-        try:
-            with open(searcher_config.get("questions_path"), 'r') as f:
-                questions = json.load(f)["questions"]             
-        except Exception as ex:
-            logger.error("Failed while loading questions. Reading from stdin.")
-        else:
-            for question in questions:
-                res = searcher.ask_question(question)  
-                output_stream(res)
+        ask_question_from_file(searcher, searcher_config.get("questions_path"))
 
-    question = input_stream()
+    question = input()
     while question.upper() != "EXIT":
         res = searcher.ask_question(question)
-        output_stream(res)
-        question = input_stream()
-
-class GradioInterface:
-    def __init__(self, config: dict):
-        self.__config = config
-        self.__searcher = self.__apply_configs(config)
-
-
-    @staticmethod
-    def __apply_configs(config: dict): 
-        searcher_config = config.get("datasheet_searcher")
-        if not searcher_config:
-            logger.error("Could not load searcher config")
-        return Searcher(searcher_config)
+        print(res)
+        question = input()
 
 if __name__ == "__main__":
     main()
