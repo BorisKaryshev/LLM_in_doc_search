@@ -39,8 +39,13 @@ def get_embedder(embedder_name: Optional[str] = None) -> Embedder:
         logger.info("Creating embedder gpt4all")
         return GPT4AllEmbedder()
     
-    embedder = embedders.get(embedder_name)
-    if embedder is None:
-        raise RuntimeError(f"Failed to create embedder, name not found {embedder_name}")
+    try:
+        embedder = embedders.get(embedder_name)()
+        if embedder is None:
+            raise RuntimeError(f"Failed to create embedder, name not found {embedder_name}")
+    except Exception as ex:
+        logger.error(f"Failed to created embedder {embedder_name}: {ex}")
+        raise
+
     logger.info(f"Created embedder {embedder_name}")
     return embedder
