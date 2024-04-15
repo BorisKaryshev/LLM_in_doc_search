@@ -22,6 +22,7 @@ def parse_arguments() -> argparse.Namespace:
                         , default="stdio"
                         , help="Path to config")
     parser.add_argument("--searcher", required=True)
+    parser.add_argument("--publish_to_web", action='store_true')
     return parser.parse_args()
 
 
@@ -40,6 +41,6 @@ if __name__ == "__main__":
     setup_logger(configs.get("logging"))
     
     if args.mode == "gradio":
-        gradio_main(publish_link_to_web=True)
+        gradio_main(configs, args.searcher, publish_link_to_web=args.publish_to_web)
     else:
         main(configs, args.searcher)
