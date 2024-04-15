@@ -2,10 +2,11 @@
     "one_doc": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача кратко, но в то же время полно ответить на вопрос строго по содержанию CONTEXT.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\n\"CONTEXT: {context}",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача кратко, но в то же время полно ответить на вопрос строго по содержанию CONTEXT.\nОтвечай на языке запроса! При необходимости переведи документацию.\nCONTEXT: {context}",
         "database_location": "docs/one_doc.csv",
         "pdfs_location": "docs/one_doc/",
-        "questions": "docs/questions.json"
+        "questions": "docs/questions.json",
+        "num_of_relevant_chunks": 3
     },    
     "one_doc_chinese": {
         "chat_model" : "GigaChat",

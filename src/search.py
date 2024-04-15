@@ -61,6 +61,9 @@ class Searcher:
         
         if not config.get("pdfs_location") and not config.get("database_location"):
             logger.warning("Database or pdfs locations not given. Chat model will answer only based on it knowledge")
+           
+        num_of_relevant_chunks = config.get("num_of_relevant_chunks", 2) 
+        self.__retriever.set_num_of_relevant_chunks(num_of_relevant_chunks)
 
     def __update_database(self, config: dict):
         if config.get("pdfs_location"):
