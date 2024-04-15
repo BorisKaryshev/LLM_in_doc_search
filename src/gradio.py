@@ -17,6 +17,7 @@ HELP_MESSAGE = (
 class SearcherForGradio:
     def __init__(self, config: dict, searcher: str):
         self.__config = config
+        self.__searcher = None
         self.change_searcher(config)
 
     def change_searcher(self, searcher_name: str):
