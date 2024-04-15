@@ -33,7 +33,7 @@ def main(config: dict, searcher_name: str) -> None:
     if searcher_config.get("questions_path"):
         ask_question_from_file(searcher, searcher_config.get("questions_path"))
 
-    question = input()
+    question = input("Your questions:\n")
     while question.upper() != "EXIT":
         res = searcher.ask_question(question)
         print(res)
