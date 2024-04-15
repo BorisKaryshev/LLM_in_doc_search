@@ -1,17 +1,29 @@
 {
-    "datasheet_searcher_example": {
-        "credentials": "SoMeCreds",
-        "prompt_template": "SoMePrOmPt {context}",
-        "pdfs_location": "",
-        "database_location": ""
-    },
-    "datasheet_searcher": {
+    "one_doc": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации в тексте. Твоя задача кратко, но в то же время полно ответить на вопрос по тексту.\nОтвечай на языке запроса! При необходимости переведи текст.\nОбязательно УКАЖИ ИСТОЧНИК ИНФОРМАЦИИ - filename!!!\nДалее приведен текст \"{context}\"",
-        "database_location": "C:\\Files\\Science\\3. Использование LLM при проектировании ЭРА\\Embeddings_Search\\data.csv",
-        "pdfs_location": "C:\\Files\\Science\\3. Использование LLM при проектировании ЭРА\\Papers\\"
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача кратко, но в то же время полно ответить на вопрос строго по содержанию CONTEXT.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь на языке запроса: \"База документов не содержит ответа на запрос\".\n\"CONTEXT: {context}",
+        "database_location": "docs\\one_doc.csv",
+        "pdfs_location": "docs\\one_doc",
+        "questions": "docs\\questions.json"
+    },    
+    "one_doc_chinese": {
+        "chat_model" : "GigaChat",
+        "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача кратко, но в то же время полно ответить на вопрос строго по содержанию CONTEXT.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь на языке запроса: \"База документов не содержит ответа на запрос\".\n\"CONTEXT: {context}",
+        "database_location": "docs\\one_chinese.csv",
+        "pdfs_location": "docs\\one_chinese",
+        "questions": "docs\\questions.json"
     },
+    "three_doc": {
+        "chat_model" : "GigaChat",
+        "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача кратко, но в то же время полно ответить на вопрос строго по содержанию CONTEXT.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь на языке запроса: \"База документов не содержит ответа на запрос\".\n\"CONTEXT: {context}",
+        "database_location": "docs\\multiple_docs.csv",
+        "pdfs_location": "docs\\multiple_docs",
+        "questions": "docs\\questions.json"
+    },
+
     "logging": {
         "version": 1,
         "disable_existing_loggers": true,
