@@ -45,7 +45,7 @@
                 "stream": "ext://sys.stdout"
             },
             "file" : {
-                "level": "DEBUG",
+                "level": "INFO",
                 "formatter": "standard",
                 "class": "logging.FileHandler",
                 "filename": "mySearcher.log",
@@ -54,7 +54,7 @@
         },
         "root": {
             "handlers": [ "file" ],
-            "level": "DEBUG"
+            "level": "INFO"
         }
     }
 }
