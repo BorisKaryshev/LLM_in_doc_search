@@ -53,7 +53,7 @@
             }
         },
         "root": {
-            "handlers": [ "file" ],
+            "handlers": [ "default", "file" ],
             "level": "INFO"
         }
     }
