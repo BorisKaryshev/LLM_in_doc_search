@@ -58,6 +58,12 @@ class GradioLLMSearcher:
         history.append({query, answer})
         return (answer, history)
 
+    def add_document(self, files):
+        if isinstance(files, str):
+            files = [files]
+        for file in files:
+            logger.info(f"Adding document {file}")
+            self.__searcher.add_document(file)
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
     searcher = GradioLLMSearcher(config, searcher_name)
@@ -66,7 +72,10 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
         msg = gr.Textbox(scale=1)
         with gr.Row():
             clear = gr.ClearButton([msg, chatbot], scale=1)
-    
+        with gr.Row():
+            file = gr.File()
+            upload = gr.UploadButton("Click to upload a document")
+            upload.upload(searcher.)
         msg.submit(searcher, [msg, chatbot], [msg, chatbot])
         try:        
             demo.launch(share=publish_link_to_web)
