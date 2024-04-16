@@ -43,7 +43,7 @@ class GradioLLMSearcher:
     def __init__(self, config: dict, searcher_name: str) -> None:
         self.__searcher = SearcherForGradio(config, searcher_name)
 
-    def __call__(self, query: str, history) -> (str, str):
+    def __call__(self, query: str, history) -> str:
         command = query.strip().split()[0].lower()
 
         if command == "change_config":
@@ -56,7 +56,7 @@ class GradioLLMSearcher:
 
         answer = self.__searcher.ask_question(query)
         history.append((query, answer))
-        return (answer, history)
+        return history
 
     def add_document(self, files):
         if isinstance(files, str):
@@ -76,7 +76,7 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
             file = gr.File()
             upload = gr.UploadButton("Click to upload a document")
             upload.upload(lambda paths: searcher.add_document(paths), upload, file)
-        msg.submit(searcher, [msg, chatbot], [None, chatbot])
+        msg.submit(searcher, [msg, chatbot], [chatbot])
         try:        
             demo.launch(share=publish_link_to_web)
         except StopServerException:
