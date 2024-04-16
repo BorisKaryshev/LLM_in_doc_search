@@ -75,7 +75,7 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
         with gr.Row():
             file = gr.File()
             upload = gr.UploadButton("Click to upload a document")
-            upload.upload(searcher.)
+            upload.upload(lambda paths: searcher.add_document(paths), upload, file)
         msg.submit(searcher, [msg, chatbot], [msg, chatbot])
         try:        
             demo.launch(share=publish_link_to_web)
