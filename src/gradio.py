@@ -54,7 +54,9 @@ class GradioLLMSearcher:
         if command == "exit":
             raise StopServerException()        
 
-        return (self.__searcher.ask_question(query), history)
+        answer = self.__searcher.ask_question(query)
+        history.append({query, answer})
+        return (answer, history)
 
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
