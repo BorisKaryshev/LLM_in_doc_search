@@ -54,5 +54,12 @@ class GradioLLMSearcher:
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
     searcher = GradioLLMSearcher(config, searcher_name)
-    demo = gr.ChatInterface(searcher)
-    demo.launch(share=publish_link_to_web)
+    with gr.Blocks() as demo:
+        chatbot = gr.Chatbot(label='Виртуальный ассистент')
+        msg = gr.Textbox(scale=1)
+        with gr.Row():
+            clear = gr.ClearButton([msg, chatbot], scale=1)
+    
+        msg.submit(searcher, [msg, chatbot], [msg])
+        
+        demo.launch(share=publish_link_to_web)
