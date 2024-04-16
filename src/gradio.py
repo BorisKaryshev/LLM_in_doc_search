@@ -55,7 +55,7 @@ class GradioLLMSearcher:
             raise StopServerException()        
 
         answer = self.__searcher.ask_question(query)
-        history.append({query, answer})
+        history.append((query, answer))
         return (answer, history)
 
     def add_document(self, files):
