@@ -36,11 +36,14 @@ class SearcherForGradio:
         self.__searcher.add_document(document_path)
 
 
+class StopServerException(Exception):
+    pass
+
 class GradioLLMSearcher:
     def __init__(self, config: dict, searcher_name: str) -> None:
         self.__searcher = SearcherForGradio(config, searcher_name)
 
-    def __call__(self, query: str, *_, **__) -> str:
+    def __call__(self, query: str, history) -> (str, str):
         command = query.strip().split()[0].lower()
 
         if command == "change_config":
@@ -48,8 +51,10 @@ class GradioLLMSearcher:
             return self.__searcher.change_searcher(searcher_name)
         if command == "help":
             return HELP_MESSAGE
+        if command == "exit":
+            raise StopServerException()        
 
-        return self.__searcher.ask_question(query)
+        return (self.__searcher.ask_question(query), history)
 
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
@@ -60,6 +65,10 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
         with gr.Row():
             clear = gr.ClearButton([msg, chatbot], scale=1)
     
-        msg.submit(searcher, [msg, chatbot], [msg])
-        
-        demo.launch(share=publish_link_to_web)
+        msg.submit(searcher, [msg, chatbot], [msg, chatbot])
+        try:        
+            demo.launch(share=publish_link_to_web)
+        except StopServerException:
+            pass
+        except Exception as ex:
+            logger.error(f"Exception occurred: {ex}")
