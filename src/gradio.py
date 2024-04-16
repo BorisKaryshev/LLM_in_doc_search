@@ -76,7 +76,7 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
             file = gr.File()
             upload = gr.UploadButton("Click to upload a document")
             upload.upload(lambda paths: searcher.add_document(paths), upload, file)
-        msg.submit(searcher, [msg, chatbot], [chatbot])
+        msg.submit(searcher, [msg, chatbot], [None, chatbot])
         try:        
             demo.launch(share=publish_link_to_web)
         except StopServerException:
