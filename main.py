@@ -44,8 +44,11 @@ if __name__ == "__main__":
         exit(1)
     setup_logger(configs.get("logging"))
     
-    if args.mode == "gradio":
-        gradio_main(configs, args.searcher, publish_link_to_web=args.publish_to_web)
-    else:
-        remove_stream_log_handlers()
-        main(configs, args.searcher)
+    try:
+        if args.mode == "gradio":
+            gradio_main(configs, args.searcher, publish_link_to_web=args.publish_to_web)
+        else:
+            remove_stream_log_handlers()
+            main(configs, args.searcher)
+    except Exception as ex:
+        logger.error(ex)
