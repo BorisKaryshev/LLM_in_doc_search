@@ -6,7 +6,7 @@
         "database_location": "docs/one_doc.csv",
         "pdfs_location": "docs/one_doc/",
         "questions": "docs/questions.json",
-        "num_of_relevant_chunks": 3,
+        "num_of_relevant_chunks": 2,
         "max_num_of_tokens" : 1024,
         "embedder_name" : "e5"
     },    
@@ -18,7 +18,8 @@
         "pdfs_location": "docs/one_chinese/",
         "questions": "docs/questions.json",
         "max_num_of_tokens" : 1024,
-        "num_of_relevant_chunks": 3
+        "num_of_relevant_chunks": 2,
+        "embedder_name" : "e5"
     },
     "three_doc": {
         "chat_model" : "GigaChat",
@@ -27,8 +28,9 @@
         "database_location": "docs/multiple_docs.csv",
         "pdfs_location": "docs/multiple_docs/",
         "questions": "docs/questions.json",
-        "num_of_relevant_chunks": 3,
-        "max_num_of_tokens" : 1024
+        "num_of_relevant_chunks": 2,
+        "max_num_of_tokens" : 1024,
+        "embedder_name" : "e5"
     },
 
     "test": {
