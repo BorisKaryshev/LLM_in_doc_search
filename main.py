@@ -51,4 +51,4 @@ if __name__ == "__main__":
             remove_stream_log_handlers()
             main(configs, args.searcher)
     except Exception as ex:
-        logger.error(ex)
+        logger.error(ex, ex.__traceback__)
