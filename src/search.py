@@ -35,7 +35,7 @@ def create_chat_model(config: dict) -> ChatWrapper:
     model_name: Optional[str] = config.get("chat_model")
 
     if model_name is None or model_name.lower() == "gigachat":
-        chat = GigaChat(credentials=config["credentials"], verify_ssl_certs=False)
+        chat = GigaChat(model="GigaChat-Plus", credentials=config["credentials"], verify_ssl_certs=False)
     
     if chat is None:
         raise RuntimeError(f"Got unexpected chat model name {model_name}")  
