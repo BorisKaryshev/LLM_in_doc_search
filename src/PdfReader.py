@@ -2,12 +2,39 @@ from pandas import DataFrame, read_csv
 from multiprocessing import Process, Queue, cpu_count
 from time import time
 import os
+import re
 import logging
+from typing import Optional
 
 from .PdfReader_impl import read_pdf
 
 
 logger = logging.getLogger()
+
+
+class TextReplacer:
+    def __init__(self, pattern: str, replace_on: str):
+        self.__pattern = pattern
+        self.__replace_on = replace_on
+
+    def __call__(self, text: str, flag = re.NOFLAG) -> str:
+        return re.sub(
+            self.__pattern, 
+            self.__replace_on,
+            text,
+            flags=flag
+        )
+
+def clean_text(text: str) -> str:
+    regexes = (
+        TextReplacer(r"[\n]+", r"\n"),
+        TextReplacer(r"[ |]+", r" "),
+    )    
+
+    for replace in regexes:
+        text = replace(text)
+
+    return text
 
 
 def process_worker(
@@ -21,7 +48,7 @@ def process_worker(
         end = time()
         result_queue.put({
             "name": str(file),
-            "text": text,
+            "text": clean_text(text),
             "embedding" : None
         })
 
