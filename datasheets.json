@@ -2,7 +2,7 @@
     "one_doc": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\n\"CONTEXT: {context}",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\nCONTEXT: {context}",
         "database_location": "docs/one_doc.csv",
         "pdfs_location": "docs/one_doc/",
         "questions": "docs/questions.json",
@@ -13,7 +13,7 @@
     "one_doc_chinese": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\n\"CONTEXT: {context}",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\nCONTEXT: {context}",
         "database_location": "docs/one_chinese.csv",
         "pdfs_location": "docs/one_chinese/",
         "questions": "docs/questions.json",
@@ -23,7 +23,7 @@
     "three_doc": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\n\"CONTEXT: {context}",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\nCONTEXT: {context}",
         "database_location": "docs/multiple_docs.csv",
         "pdfs_location": "docs/multiple_docs/",
         "questions": "docs/questions.json",
@@ -34,7 +34,7 @@
     "test": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjBkZmNkMzcxLWM3Y2EtNGRmOS1hYzlmLWZjMjBmNGNlMDJlMg==",
-        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\n\"CONTEXT: {context}",
+        "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\nCONTEXT: {context}",
         "database_location": "docs/test.csv",
         "pdfs_location": "docs/test/",
         "questions": "docs/questions.json",
