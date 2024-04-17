@@ -17,7 +17,7 @@ class TextReplacer:
         self.__pattern = pattern
         self.__replace_on = replace_on
 
-    def __call__(self, text: str, flag = re.NOFLAG) -> str:
+    def __call__(self, text: str, flag = 0) -> str:
         return re.sub(
             self.__pattern, 
             self.__replace_on,
