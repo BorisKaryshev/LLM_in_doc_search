@@ -4,7 +4,7 @@ from time import time
 import os
 import re
 import logging
-from typing import Optional
+from pathlib import Path
 
 from .PdfReader_impl import read_pdf
 
@@ -29,12 +29,24 @@ def clean_text(text: str) -> str:
     regexes = (
         TextReplacer(r"[\n]+", r"\n"),
         TextReplacer(r"[ |]+", r" "),
+        TextReplacer(r"\n+\s+", r"\n"),
+        TextReplacer(r"\s+\n+", r"\n"),
     )    
 
     for replace in regexes:
         text = replace(text)
 
     return text
+
+
+def read_file(path: Path):
+    extension = path.suffix
+    if extension == ".txt":
+        with open(str(path), 'r') as file:
+            return file.read()
+    if extension == ".pdf":
+        return read_pdf(str(path.resolve()))
+    
 
 
 def process_worker(
@@ -44,7 +56,7 @@ def process_worker(
 ) -> None:
     for file in iter(filename_queue.get, None):        
         begin = time()
-        text = read_pdf(folder_name + file)
+        text = read_file(Path(folder_name + file))
         end = time()
         result_queue.put({
             "name": str(file),
