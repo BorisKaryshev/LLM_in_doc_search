@@ -5,6 +5,7 @@ import os
 import re
 import logging
 from pathlib import Path
+from typing import List
 
 from .PdfReader_impl import read_pdf
 
@@ -25,6 +26,7 @@ class TextReplacer:
             flags=flag
         )
 
+
 def clean_text(text: str) -> str:
     regexes = (
         TextReplacer(r"[\n]+", r"\n"),
@@ -37,6 +39,10 @@ def clean_text(text: str) -> str:
         text = replace(text)
 
     return text
+
+
+def clean_list_of_texts(texts: List[str]) -> List[str]:
+        return [clean_text(i) for i in texts]
 
 
 def read_file(path: Path):
@@ -60,7 +66,7 @@ def process_worker(
         end = time()
         result_queue.put({
             "name": str(file),
-            "text": clean_text(text),
+            "text": clean_list_of_texts(text),
             "embedding" : None
         })
 
