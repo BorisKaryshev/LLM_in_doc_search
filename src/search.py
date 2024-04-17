@@ -80,8 +80,11 @@ class Searcher:
 
     def ask_question(self, question: str) -> str:
         try:
+            logger.info(f"Asking question: {question}")
             context = self.__retriever.get_relevant_documents(question)
-            return self.__chat_model.ask_question(question, context)
+            result = self.__chat_model.ask_question(question, context)
+            logger.info(f"Got result: {result}")
+            return result 
         except Exception as ex:
             logger.error(f"Asking question failed with: {ex}")
             return "Failed to answer question. See logs for details."
