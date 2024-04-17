@@ -40,11 +40,6 @@ def clean_text(text: str) -> str:
 
     return text
 
-
-def clean_list_of_texts(texts: List[str]) -> List[str]:
-        return [clean_text(i) for i in texts]
-
-
 def read_file(path: Path):
     extension = path.suffix
     if extension == ".txt":
@@ -66,7 +61,7 @@ def process_worker(
         end = time()
         result_queue.put({
             "name": str(file),
-            "text": clean_list_of_texts(text),
+            "text": clean_text(text),
             "embedding" : None
         })
 

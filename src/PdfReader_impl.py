@@ -156,4 +156,4 @@ def read_pdf(pdf_path: str) -> list[str]:
         os.remove('cropped_image' + str(os.getpid()) + '.pdf')
         os.remove('PDF_image' + str(os.getpid()) + '.png')
 
-    return [''.join([''.join(page[4]) for page in text_per_page.values()])]
+    return ''.join([''.join(page[4]) for page in text_per_page.values()])
