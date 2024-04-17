@@ -88,7 +88,7 @@ class MyRetriever(BaseRetriever):
         indexes = self._data['chunk'].astype(str).values
         logger.debug(f"After searching for best documents got indexes: {indexes}")
 
-        num_of_chunks = max(self._num_of_relevant_chunks, len(self._data["name"].values))
+        num_of_chunks = min(self._num_of_relevant_chunks, len(self._data["name"].values))
         return "\n".join([
             self.__get_text_from_table(index)
             for index in range(num_of_chunks)
