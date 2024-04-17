@@ -68,7 +68,7 @@ class MyRetriever(BaseRetriever):
         relevant_chunk = filtered_data.astype(str).values[relevant_chunk_index]
 
         result = filename + relevant_chunk
-        logger.info(f"Relevant document is: {result}")
+        logger.info(f"Relevant document is: {repr(result)}")
         return result
     
     def __sort_data_by_relevancy(self, query: str) -> None:
