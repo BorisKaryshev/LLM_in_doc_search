@@ -20,8 +20,8 @@ def parse_arguments() -> argparse.Namespace:
                         , help="Path to config")
     parser.add_argument("--mode", choices=["stdio", "gradio"] 
                         , default="stdio"
-                        , help="Path to config")
-    parser.add_argument("--searcher", required=True)
+                        , help="Working mode")
+    parser.add_argument("--searcher", required=True, help="Which config to use")
     parser.add_argument("--publish_to_web", action='store_true')
     return parser.parse_args()
 
