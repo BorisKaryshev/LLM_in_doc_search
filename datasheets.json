@@ -5,7 +5,7 @@
         "prompt_template": "Ты эксперт по поиску информации о электронных компонентах в их документации. Твоя задача резюмировать информацию из содержания CONTEXT, подходящую под запрос.\nОтвечай на языке запроса! При необходимости переведи документацию.\nЕсли CONTEXT не содержит ответа на вопрос, ответь: База документов не содержит ответа на запрос.\nCONTEXT: {context}",
         "database_location": "docs/one_doc.csv",
         "pdfs_location": "docs/one_doc/",
-        "questions": "docs/questions.json",
+        "questions": "docs/one_doc/questions.json",
         "num_of_relevant_chunks": 2,
         "max_num_of_tokens" : 1024,
         "embedder_name" : "e5"
