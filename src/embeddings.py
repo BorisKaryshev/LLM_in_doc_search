@@ -5,7 +5,7 @@ from langchain.text_splitter import CharacterTextSplitter
 import logging
 from tqdm import tqdm
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 def create_embeddings(data: DataFrame | str, embedder: Embedder, max_tokens: int = 512) -> DataFrame:

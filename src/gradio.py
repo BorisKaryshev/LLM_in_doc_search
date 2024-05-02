@@ -4,7 +4,7 @@ import gradio as gr
 import logging
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 HELP_MESSAGE = (

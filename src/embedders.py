@@ -5,7 +5,7 @@ from typing import Optional
 import logging
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class Embedder(ABC):
@@ -27,7 +27,7 @@ class E5Embedder(Embedder):
         self.__embedder = SentenceTransformer('intfloat/e5-large-v2')
 
     def embed_query(self, query: str) -> list:
-        return self.__embedder.encode([query])[0]
+        return self.__embedder.encode([query], show_progress_bar=False)[0]
     
 
 class HuggingFaceEmbedder(Embedder):

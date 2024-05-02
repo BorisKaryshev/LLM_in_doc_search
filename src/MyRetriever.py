@@ -15,7 +15,7 @@ from uuid import uuid4
 import logging
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 def cosine_distances(a, b):
@@ -63,13 +63,10 @@ class MyRetriever(BaseRetriever):
         filename = self._data['name']
         filtered_data = self._data['text']
         
-        filename = f"Filename: {filename.astype(str).values[relevant_chunk_index]}\n"
-        
         relevant_chunk = filtered_data.astype(str).values[relevant_chunk_index]
 
-        result = filename + relevant_chunk
-        logger.info(f"Relevant document is: {repr(result)}")
-        return result
+        logger.info(f"Relevant document is: {repr(relevant_chunk)}")
+        return relevant_chunk
     
     def __sort_data_by_relevancy(self, query: str) -> None:
         query_embedding = self._embedder.embed_query(query)

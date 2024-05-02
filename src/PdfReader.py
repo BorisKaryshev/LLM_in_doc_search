@@ -10,7 +10,7 @@ from typing import List
 from .PdfReader_impl import read_pdf
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class TextReplacer:
@@ -33,6 +33,7 @@ def clean_text(text: str) -> str:
         TextReplacer(r"[ |]+", r" "),
         TextReplacer(r"\n+\s+", r"\n"),
         TextReplacer(r"\s+\n+", r"\n"),
+        TextReplacer(r"None", r""),
     )    
 
     for replace in regexes:

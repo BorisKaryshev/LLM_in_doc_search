@@ -28,6 +28,9 @@ DEFAULT_LOGGER_CONFIG = {
 }
 
 
+LOGGER_CONFIG = None
+
+
 def setup_default_logger():
     logging.config.dictConfig(DEFAULT_LOGGER_CONFIG)
 
