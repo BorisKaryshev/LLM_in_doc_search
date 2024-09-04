@@ -40,7 +40,8 @@ class MyRetriever(BaseRetriever):
         if len(path.suffixes) > 1 and path.suffix != ".pdf":
             raise RuntimeError(f"Only supported format is pdf, got {path}")
         
-        tmp_dir = Path(f"./{uuid4()}").mkdir()
+        tmp_dir = Path(f"./{uuid4()}")
+        tmp_dir.mkdir(exist_ok=True)
         prev_path = path
         path.rename(tmp_dir / path.name)
         

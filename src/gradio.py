@@ -62,7 +62,6 @@ class GradioLLMSearcher:
         if isinstance(files, str):
             files = [files]
         for file in files:
-            logger.info(f"Adding document {file}")
             self.__searcher.add_document(file)
 
 def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = False):
