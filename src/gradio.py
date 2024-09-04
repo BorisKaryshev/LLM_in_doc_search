@@ -2,7 +2,7 @@ from .search import Searcher
 
 import gradio as gr
 import logging
-
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ class SearcherForGradio:
         return self.__searcher.ask_question(query)
     
     def add_document(self, document_path: str) -> None:
-        self.__searcher.add_document(document_path)
+        self.__searcher.add_document(Path(document_path))
 
 
 class StopServerException(Exception):
