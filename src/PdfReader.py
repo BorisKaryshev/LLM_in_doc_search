@@ -58,7 +58,7 @@ def process_worker(
 ) -> None:
     for file in iter(filename_queue.get, None):        
         begin = time()
-        text = read_file(Path(folder_name + file))
+        text = read_file(Path(folder_name) / Path(file))
         end = time()
         result_queue.put({
             "name": str(file),

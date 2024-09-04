@@ -42,18 +42,18 @@ class MyRetriever(BaseRetriever):
             raise RuntimeError(f"Only supported format is pdf, got {path}")
         
         tmp_dir = Path(f"./{uuid4()}")
-        tmp_dir.mkdir(exist_ok=True)
+        tmp_dir.mkdir()
         prev_path = path
         path.rename(tmp_dir / path.name)
         
         try:        
-            data = load_pdfs(tmp_dir, DataFrame())
+            data = load_pdfs(str(tmp_dir), DataFrame())
         except Exception:
             path.rename(prev_path)
             raise
 
-        self._data = concat([self._data, data], ignore_index=True, sort=False)
-        self._data = create_embeddings(self._data, self._embedder, max_tokens=self._max_tokens)
+        self.__dict__["_data"] = concat([self._data, data], ignore_index=True, sort=False)
+        self.__dict__["_data"] = create_embeddings(self._data, self._embedder, max_tokens=self._max_tokens)
         logger.info("Document added successfully")
 
     def set_num_of_relevant_chunks(self, num: int) -> None:
