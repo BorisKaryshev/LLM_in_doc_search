@@ -7,7 +7,7 @@ import logging
 import argparse
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_PATH_TO_CONFIG = "./datasheets.json"

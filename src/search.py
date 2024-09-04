@@ -11,7 +11,7 @@ import logging
 import os.path
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_DATABASE_LOCATION = "./data.csv"
