@@ -29,6 +29,7 @@ class MyRetriever(BaseRetriever):
         super().__init__()
         
         self.__dict__['_num_of_relevant_chunks'] = 2
+        self.__dict__['_max_tokens'] = max_tokens 
         self.__dict__['_embedder'] = get_embedder(embedder_name)
         self.__dict__['_data'] = create_embeddings(data, self._embedder, max_tokens=max_tokens)
         logger.info(f"MyRetriever created with data")
@@ -52,6 +53,7 @@ class MyRetriever(BaseRetriever):
             raise
 
         self._data = concat([self._data, data], ignore_index=True, sort=False)
+        self._data = create_embeddings(self._data, self._embedder, max_tokens=self._max_tokens)
         logger.info("Document added successfully")
 
     def set_num_of_relevant_chunks(self, num: int) -> None:
