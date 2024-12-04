@@ -1,0 +1,7 @@
+services:
+  llm_searcher:
+    build: .
+    container_name: llm_searcher.g
+    hostname: llm_searcher.g
+    restart: no
+    network_mode: bridge
