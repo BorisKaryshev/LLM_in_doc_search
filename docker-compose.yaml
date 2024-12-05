@@ -5,3 +5,5 @@ services:
     hostname: llm_searcher.g
     restart: no
     network_mode: bridge
+    volumes:
+      - ~/.cache/docker_pip/:/root/.cache/pip

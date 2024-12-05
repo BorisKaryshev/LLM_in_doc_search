@@ -1,13 +1,15 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get -y update && \
-    apt-get install --assume-yes python3.11 python3-pip
+    apt-get install --assume-yes python3.12 python3-pip poppler-utils tesseract-ocr
 
 COPY requirements.txt /root
-RUN python3.11 -m pip install -r /root/requirements.txt
-
-COPY conf /root
-COPY llm_searcher /root
+RUN --mount=type=cache,target=/root/.cache python3.12 -m pip install --break-system-packages -r /root/requirements.txt
+RUN apt-get install --assume-yes poppler-utils tesseract-ocr
 
 WORKDIR /root
-ENTRYPOINT python3.11 llm_searcher --config conf/datasheets.json --searcher one_doc
+COPY conf ./conf
+COPY llm_searcher/ ./llm_searcher
+COPY ./docs ./docs
+
+ENTRYPOINT python3.12 llm_searcher --config conf/datasheets.json --searcher one_doc --mode gradio

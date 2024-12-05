@@ -5,7 +5,7 @@ from .MyRetriever import MyRetriever
 from pandas import read_csv, DataFrame
 from typing import Optional
 from pathlib import Path
-from langchain.chat_models.gigachat import GigaChat
+from langchain_community.chat_models.gigachat import GigaChat
 from langchain.prompts.chat import ChatPromptTemplate
 import logging
 import os.path
@@ -19,13 +19,13 @@ DEFAULT_DATABASE_LOCATION = "./data.csv"
 
 def try_deco(func):
     def inner(*args, **kwargs):
-        try: 
+        try:
             return func(*args, **kwargs)
         except Exception as ex:
             logger.error(f"Exception while calling {func.__name__} occurred")
             logger.error(f"{ex}")
             raise
-    
+
     return inner
 
 
@@ -36,9 +36,9 @@ def create_chat_model(config: dict) -> ChatWrapper:
 
     if model_name is None or model_name.lower() == "gigachat":
         chat = GigaChat(model="GigaChat-Plus", credentials=config["credentials"], verify_ssl_certs=False)
-    
+
     if chat is None:
-        raise RuntimeError(f"Got unexpected chat model name {model_name}")  
+        raise RuntimeError(f"Got unexpected chat model name {model_name}")
     return ChatWrapper(chat, prompt_template=config.get("prompt_template"))
 
 
@@ -84,7 +84,7 @@ class Searcher:
             context = self.__retriever.get_relevant_documents(question)
             result = self.__chat_model.ask_question(question, context)
             logger.info(f"Got result: {result}")
-            return result 
+            return result
         except Exception as ex:
             logger.error(f"Asking question failed with: {ex}")
             return "Failed to answer question. See logs for details."

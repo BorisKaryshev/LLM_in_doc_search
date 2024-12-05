@@ -8,7 +8,7 @@
         "num_of_relevant_chunks": 2,
         "max_num_of_tokens" : 512,
         "embedder_name" : "e5"
-    },    
+    },
     "one_doc_chinese": {
         "chat_model" : "GigaChat",
         "credentials": "ZjkyMWJhMmUtMTA3OC00NzBmLTk1NTctZjkwZTFlM2EwMjEzOjhlYjNhMDVmLTI3MGYtNGU5MC04NDczLWVhODAxZjI2Y2RmOQ==",

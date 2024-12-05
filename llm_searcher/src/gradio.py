@@ -31,7 +31,7 @@ class SearcherForGradio:
 
     def ask_question(self, query: str) -> str:
         return self.__searcher.ask_question(query)
-    
+
     def add_document(self, document_path: str) -> None:
         self.__searcher.add_document(Path(document_path))
 
@@ -52,7 +52,7 @@ class GradioLLMSearcher:
         if command == "help":
             return HELP_MESSAGE
         if command == "exit":
-            raise StopServerException()        
+            raise StopServerException()
 
         answer = self.__searcher.ask_question(query)
         history.append((query, answer))
@@ -76,8 +76,11 @@ def gradio_main(config: dict, searcher_name: str, publish_link_to_web: bool = Fa
             upload = gr.UploadButton("Click to upload a document")
             upload.upload(lambda paths: searcher.add_document(paths), upload, file)
         msg.submit(searcher, [msg, chatbot], [chatbot])
-        try:        
-            demo.launch(share=publish_link_to_web)
+        try:
+            if publish_link_to_web:
+                demo.launch(share=True)
+            else:
+                demo.launch(server_name="0.0.0.0", share=False)
         except StopServerException:
             pass
         except Exception as ex:
